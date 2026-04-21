@@ -5,7 +5,7 @@ description: Next.js Architecture Documentation
 
 ### [ React Component (frontend) ]
 
-```
+```ts
 await fetch('/api/horoscope', {
   method: 'POST',
   body: JSON.stringify({ sign: 'Leo' })
