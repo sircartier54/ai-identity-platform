@@ -1,82 +1,63 @@
-'use client'
+import Link from "next/link";
 
-import { useState } from "react";
-import { generateHoroscope } from "./actions";
-
-export default function ZodiacLab() {
-  const [result, setResult] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-
-  async function handleForm(formData: FormData) {
-    setLoading(true);
-    setError(null);
-    setResult(null);
-
-    const res = await generateHoroscope(formData);
-    
-    if (res.success) {
-      setResult(res.horoscope);
-    } else {
-      setError(res.error);
-    }
-    setLoading(false);
-  }
-
+export default function IdentityLab() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-200 flex flex-col items-center justify-center p-6">
-      <div className="w-full max-w-md bg-slate-900 border border-slate-800 p-8 rounded-2xl shadow-2xl">
-        <header className="mb-8 text-center">
-          <h1 className="text-2xl font-mono text-emerald-400 tracking-[0.2em] uppercase">Zodiac_Protocol</h1>
-          <div className="h-1 w-24 bg-emerald-900 mx-auto mt-2 rounded-full overflow-hidden">
-            {loading && <div className="h-full bg-emerald-400 animate-progress" style={{width: '50%'}} />}
-          </div>
-        </header>
-        
-        <form action={handleForm} className="space-y-4">
-          <div className="space-y-1">
-            <label className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Subject Name</label>
-            <input name="name" required className="w-full bg-slate-950 border border-slate-800 p-3 rounded-lg outline-none focus:ring-1 focus:ring-emerald-500/50 transition-all" />
-          </div>
+    <main className="min-h-screen bg-slate-950 text-slate-200 flex flex-col items-center justify-center p-6 relative overflow-hidden">
+      {/* Background grid */}
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "linear-gradient(#94a3b8 1px, transparent 1px), linear-gradient(90deg, #94a3b8 1px, transparent 1px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
 
-          <div className="flex gap-4">
-            <div className="flex-1 space-y-1">
-              <label className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Age</label>
-              <input name="age" type="number" required className="w-full bg-slate-950 border border-slate-800 p-3 rounded-lg outline-none" />
-            </div>
-            <div className="flex-1 space-y-1">
-              <label className="text-[10px] text-slate-500 uppercase font-bold tracking-widest">Sign</label>
-              <select name="zodiac" className="w-full bg-slate-950 border border-slate-800 p-3 rounded-lg outline-none h-[50px]">
-                {['Aries', 'Taurus', 'Gemini', 'Cancer', 'Leo', 'Virgo', 'Libra', 'Scorpio', 'Sagittarius', 'Capricorn', 'Aquarius', 'Pisces'].map(s => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
-              </select>
-            </div>
-          </div>
-          
-          <button 
-            type="submit" 
-            disabled={loading} 
-            className="w-full bg-emerald-600 hover:bg-emerald-500 active:scale-[0.98] py-4 rounded-xl font-black tracking-widest transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+      {/* Glow accent */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-violet-900/10 blur-[120px] pointer-events-none" />
+
+      <div className="relative z-10 flex flex-col items-center gap-12 text-center">
+        {/* Badge */}
+        <span className="text-[10px] font-bold tracking-[0.4em] uppercase text-violet-400 border border-violet-800/60 px-4 py-1.5 rounded-full bg-violet-950/40">
+          Experimental Suite
+        </span>
+
+        {/* Title */}
+        <div className="space-y-2">
+          <h1 className="text-6xl sm:text-7xl font-black tracking-tight font-mono">
+            <span className="text-slate-100">Identity</span>
+            <span className="text-violet-400">Lab</span>
+          </h1>
+          <p className="text-slate-500 text-sm tracking-widest uppercase font-mono">
+            v0.1 — Select a module
+          </p>
+        </div>
+
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row gap-4 w-full max-w-sm">
+          <Link
+            href="/zodiac"
+            className="flex-1 group bg-slate-900 hover:bg-violet-950/60 border border-slate-800 hover:border-violet-700/60 px-6 py-5 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-violet-900/20 active:scale-[0.97]"
           >
-            {loading ? "SEQUENCING..." : "INITIATE ANALYSIS"}
-          </button>
-        </form>
-
-        <div className="mt-8 min-h-[100px]">
-          {result && (
-            <div className="p-4 bg-emerald-950/20 border-l-2 border-emerald-500 rounded text-sm leading-relaxed text-slate-300 animate-in fade-in duration-700">
-              <span className="text-emerald-500 font-bold block mb-1 text-[10px] uppercase">Analysis Complete:</span>
-              "{result}"
+            <div className="text-xs text-slate-500 group-hover:text-violet-400 uppercase tracking-[0.2em] font-bold mb-1 transition-colors font-mono">
+              Module 01
             </div>
-          )}
-
-          {error && (
-            <div className="p-4 bg-red-950/20 border-l-2 border-red-500 rounded text-sm text-red-300">
-              <span className="font-bold block mb-1 text-[10px] uppercase">System Warning:</span>
-              {error}
+            <div className="text-slate-100 font-bold text-lg tracking-wide">
+              Zodiac
             </div>
-          )}
+          </Link>
+
+          <Link
+            href="/partner-test"
+            className="flex-1 group bg-slate-900 hover:bg-emerald-950/60 border border-slate-800 hover:border-emerald-700/60 px-6 py-5 rounded-2xl transition-all duration-200 shadow-lg hover:shadow-emerald-900/20 active:scale-[0.97]"
+          >
+            <div className="text-xs text-slate-500 group-hover:text-emerald-400 uppercase tracking-[0.2em] font-bold mb-1 transition-colors font-mono">
+              Module 02
+            </div>
+            <div className="text-slate-100 font-bold text-lg tracking-wide">
+              Partner Test
+            </div>
+          </Link>
         </div>
       </div>
     </main>
